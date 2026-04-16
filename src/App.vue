@@ -23,6 +23,10 @@
             <el-icon><Setting /></el-icon>
             <span>项目配置</span>
           </el-menu-item>
+          <el-menu-item index="/ck-metrics">
+            <el-icon><DataLine /></el-icon>
+            <span>CK度量</span>
+          </el-menu-item>
           <el-menu-item index="/ucp">
             <el-icon><Document /></el-icon>
             <span>UCP度量</span>
@@ -71,10 +75,11 @@
 </template>
 
 <script setup lang="ts">
+import { DataAnalysis, Setting, Document, Timer, Warning, Printer, Refresh, Loading, DataLine } from '@element-plus/icons-vue'
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
-import api from './services/api'
+// import api from './services/api'
 
 const router = useRouter()
 const loading = ref(false)
