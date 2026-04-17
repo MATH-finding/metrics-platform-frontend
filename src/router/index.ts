@@ -2,12 +2,20 @@ import { createRouter, createWebHistory } from 'vue-router'
 import CKMetricsView from '../views/ck/CKMetricsView.vue'
 import LKMetricsView from '../views/lk/LKMetricsView.vue'
 import FPMetricsView from '../views/lk/FPMetricsView.vue'
+import ParserView from '../views/parser/ParserView.vue'
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
-      redirect: '/ck-metrics'
+      redirect: '/dashboard',
+    },
+    {
+      path: '/dashboard',
+      name: 'Dashboard',
+      component: ParserView,
+      meta: { title: '代码解析与度量' }
     },
     {
       path: '/ck-metrics',
