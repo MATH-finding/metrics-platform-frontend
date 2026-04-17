@@ -27,6 +27,14 @@
             <el-icon><DataLine /></el-icon>
             <span>CK度量</span>
           </el-menu-item>
+          <el-menu-item index="/lk-metrics">
+            <el-icon><DataAnalysis /></el-icon>
+            <span>LK度量</span>
+          </el-menu-item>
+          <el-menu-item index="/fp-metrics">
+            <el-icon><PieChart /></el-icon>
+            <span>功能点度量</span>
+          </el-menu-item>
           <el-menu-item index="/ucp">
             <el-icon><Document /></el-icon>
             <span>UCP度量</span>
@@ -75,7 +83,7 @@
 </template>
 
 <script setup lang="ts">
-import { DataAnalysis, Setting, Document, Timer, Warning, Printer, Refresh, Loading, DataLine } from '@element-plus/icons-vue'
+import { DataAnalysis, Setting, Document, Timer, Warning, Printer, Refresh, Loading, DataLine, PieChart } from '@element-plus/icons-vue'
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
