@@ -23,6 +23,10 @@
             <el-icon><Setting /></el-icon>
             <span>项目配置</span>
           </el-menu-item>
+          <el-menu-item index="/parser">
+            <el-icon><Folder /></el-icon>
+            <span>代码解析</span>
+          </el-menu-item>
           <el-menu-item index="/ck-metrics">
             <el-icon><DataLine /></el-icon>
             <span>CK度量</span>
@@ -51,6 +55,10 @@
             <el-icon><Printer /></el-icon>
             <span>报告生成</span>
           </el-menu-item>
+          <el-menu-item index="/compare">
+            <el-icon><TrendCharts /></el-icon>
+            <span>对比分析</span>
+          </el-menu-item>
         </el-menu>
       </el-aside>
 
@@ -61,7 +69,6 @@
             <span class="page-title">{{ $route.meta.title }}</span>
           </div>
           <div class="header-actions">
-            <el-tag type="info" size="small">D模块</el-tag>
             <el-button size="small" @click="refreshData" :loading="loading">
               <el-icon><Refresh /></el-icon>
               刷新数据
@@ -83,7 +90,7 @@
 </template>
 
 <script setup lang="ts">
-import { DataAnalysis, Setting, Document, Timer, Warning, Printer, Refresh, Loading, DataLine, PieChart } from '@element-plus/icons-vue'
+import { DataAnalysis, Setting, Document, Timer, Warning, Printer, Refresh, Loading, DataLine, PieChart, Folder, TrendCharts } from '@element-plus/icons-vue'
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
