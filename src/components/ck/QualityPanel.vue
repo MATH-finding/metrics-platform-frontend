@@ -1,6 +1,7 @@
 <template>
   <div>
-    <div v-if="!selectedClass" style="text-align:center; color:#909399; padding: 60px 0;">
+    <div v-if="!selectedClass"
+         style="text-align:center; color:#909399; padding: 60px 0;">
       请在表格中点击类名查看质量评估
     </div>
     <div v-else>
@@ -31,7 +32,8 @@
         style="margin-bottom: 20px;"
       />
 
-      <div style="font-weight: 500; margin-bottom: 10px;">改进建议</div>
+      <!-- 规则建议 -->
+      <div style="font-weight: 500; margin-bottom: 10px;">规则建议</div>
       <el-alert
         v-for="(s, i) in suggestions"
         :key="i"
@@ -41,11 +43,42 @@
         :closable="false"
         style="margin-bottom: 8px;"
       />
+
+      <!-- AI建议区域 -->
+      <div style="margin-top: 24px;">
+        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+          <span style="font-weight: 500;">AI 智能建议</span>
+          <el-button
+            type="primary"
+            size="small"
+            :loading="aiLoading"
+            @click="getAiSuggestion"
+          >
+            {{ aiLoading ? 'AI分析中...' : '✨ 获取AI建议' }}
+          </el-button>
+        </div>
+
+        <el-alert
+          v-if="aiError"
+          :title="aiError"
+          type="error"
+          show-icon
+          :closable="false"
+          style="margin-bottom: 8px;"
+        />
+
+        <div v-if="aiSuggestion"
+             style="background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 8px; padding: 16px; line-height: 1.8; white-space: pre-line; color: #0369a1;">
+          {{ aiSuggestion }}
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import { fetchAiSuggestion } from '@/api/ckApi.js'
+
 export default {
   name: 'QualityPanel',
   props: {
@@ -56,6 +89,20 @@ export default {
     allScores: {
       type: Array,
       default: () => []
+    }
+  },
+  data() {
+    return {
+      aiLoading: false,
+      aiSuggestion: '',
+      aiError: ''
+    }
+  },
+  watch: {
+    selectedClass() {
+      // 切换类时清空AI建议
+      this.aiSuggestion = ''
+      this.aiError = ''
     }
   },
   computed: {
@@ -76,6 +123,22 @@ export default {
       if (score >= 70) return '#409eff'
       if (score >= 55) return '#e6a23c'
       return '#f56c6c'
+    }
+  },
+  methods: {
+    async getAiSuggestion() {
+      if (!this.selectedClass) return
+      this.aiLoading = true
+      this.aiSuggestion = ''
+      this.aiError = ''
+      try {
+        const res = await fetchAiSuggestion(this.selectedClass.className)
+        this.aiSuggestion = res.data.suggestion
+      } catch (e) {
+        this.aiError = 'AI建议获取失败，请检查网络或API Key是否正确'
+      } finally {
+        this.aiLoading = false
+      }
     }
   }
 }
